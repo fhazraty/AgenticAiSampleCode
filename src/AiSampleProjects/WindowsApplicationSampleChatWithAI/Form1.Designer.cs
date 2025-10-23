@@ -6,7 +6,7 @@ namespace WindowsApplicationSampleChatWithAI
     partial class Form1
     {
 		private System.ComponentModel.IContainer components = null;
-		private System.Windows.Forms.TextBox txtChat;
+		private System.Windows.Forms.RichTextBox txtChat;
 		private System.Windows.Forms.TextBox txtUserInput;
 		private System.Windows.Forms.Button btnSend;
 
@@ -19,7 +19,7 @@ namespace WindowsApplicationSampleChatWithAI
 
 		private void InitializeComponent()
 		{
-			txtChat = new TextBox();
+			txtChat = new RichTextBox();
 			txtUserInput = new TextBox();
 			btnSend = new Button();
 			SuspendLayout();
@@ -27,14 +27,14 @@ namespace WindowsApplicationSampleChatWithAI
 			// txtChat
 			// 
 			txtChat.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-			txtChat.BackColor = Color.White;
+			txtChat.BackColor = Color.FromArgb(240, 242, 245);
+			txtChat.BorderStyle = BorderStyle.None;
 			txtChat.Font = new Font("B Nazanin", 12F);
 			txtChat.Location = new Point(12, 12);
-			txtChat.Multiline = true;
 			txtChat.Name = "txtChat";
 			txtChat.ReadOnly = true;
 			txtChat.RightToLeft = RightToLeft.Yes;
-			txtChat.ScrollBars = ScrollBars.Vertical;
+			txtChat.ScrollBars = RichTextBoxScrollBars.Vertical;
 			txtChat.Size = new Size(560, 320);
 			txtChat.TabIndex = 0;
 			// 
