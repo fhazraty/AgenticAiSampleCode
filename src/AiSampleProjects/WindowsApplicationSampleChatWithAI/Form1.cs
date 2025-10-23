@@ -9,7 +9,8 @@ namespace WindowsApplicationSampleChatWithAI
     {
 		private readonly HttpClient _http;
 		private readonly string _baseUrl = "http://localhost:1234";
-		private readonly string _model = "openai/gpt-oss-20b";
+		//private readonly string _model = "openai/gpt-oss-20b";
+		private readonly string _model = "deepseek-r1-distill-llama-70b";
 		private readonly List<object> _messages = new();
 		private readonly StringBuilder _chatHtml = new();
 		private bool _webViewInitialized = false;
