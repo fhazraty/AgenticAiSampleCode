@@ -24,30 +24,21 @@ builder.Services.AddSingleton<ReportGenerator>();
 builder.Services.AddSingleton<ILlmClient>(sp =>
 {
     var cfg = sp.GetRequiredService<AgentConfig>();
-    var provider = cfg.Agent.Provider?.ToLowerInvariant();
+
+    // fallbacks to safe defaults
+    var provider = cfg.Agent?.Provider?.ToLowerInvariant() ?? "lmstudio";
+    var model = cfg.Agent?.Model ?? "openai/gpt-oss-20b";
+    var baseUrl = cfg.Ollama?.BaseUrl ?? "http://localhost:1234";
 
     return provider switch
     {
-        // LM Studio (OpenAI-compatible endpoint)
-        "lmstudio" => new OllamaLlmClient(
-            cfg.Ollama.BaseUrl ?? "http://localhost:1234",
-            cfg.Agent.Model ?? "openai/gpt-oss-20b"),
-
-        // Ollama native
-        "ollamahttp" => new OllamaLlmClient(
-            cfg.Ollama.BaseUrl ?? "http://localhost:11434",
-            cfg.Agent.Model ?? "llama3.1:8b-instruct"),
-
-        // External process (optional custom runner)
+        "lmstudio" => new OllamaLlmClient(baseUrl, model),
+        "ollamahttp" => new OllamaLlmClient("http://localhost:11434", model),
         "process" => new ProcessLlmClient(
             cfg.ProcessLlm.ExecutablePath!,
             cfg.ProcessLlm.ArgsTemplate!,
             cfg.ProcessLlm.ModelPath!),
-
-        // Default → LM Studio + GPT-OSS-20B
-        _ => new OllamaLlmClient(
-            cfg.Ollama.BaseUrl ?? "http://localhost:1234",
-            cfg.Agent.Model ?? "openai/gpt-oss-20b"),
+        _ => new OllamaLlmClient(baseUrl, model),
     };
 });
 

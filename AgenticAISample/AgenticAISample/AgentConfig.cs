@@ -10,13 +10,13 @@ public sealed class AgentConfig
     public ReportsSection Reports { get; init; } = new();
 
     public sealed class AgentSection
-    {
-        public string? Provider { get; init; }
-        public string? Model { get; init; }
-        public string SystemPrompt { get; init; } = "You are a helpful, concise local assistant.";
-        public int MaxTokens { get; init; } = 512;
-        public double Temperature { get; init; } = 0.3;
-    }
+{
+    public string? Provider { get; init; } = "lmstudio";
+    public string? Model { get; init; } = "openai/gpt-oss-20b";
+    public string SystemPrompt { get; init; } = "You are a helpful, concise local assistant.";
+    public int MaxTokens { get; init; } = 512;
+    public double Temperature { get; init; } = 0.3;
+}
 
     public sealed class OllamaSection
     {
