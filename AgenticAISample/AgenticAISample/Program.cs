@@ -20,15 +20,34 @@ builder.Services.AddSingleton<IMemoryStore, FileMemoryStore>();
 builder.Services.AddSingleton<SqlService>();
 builder.Services.AddSingleton<ReportGenerator>();
 
-// LLM provider selection
+// LLM provider selection (supports LM Studio / Ollama / Process)
 builder.Services.AddSingleton<ILlmClient>(sp =>
 {
     var cfg = sp.GetRequiredService<AgentConfig>();
-    return cfg.Agent.Provider?.ToLowerInvariant() switch
+    var provider = cfg.Agent.Provider?.ToLowerInvariant();
+
+    return provider switch
     {
-        "ollamahttp" => new OllamaLlmClient(cfg.Ollama.BaseUrl ?? "http://localhost:11434", cfg.Agent.Model ?? "llama3.1:8b-instruct"),
-        "process" => new ProcessLlmClient(cfg.ProcessLlm.ExecutablePath!, cfg.ProcessLlm.ArgsTemplate!, cfg.ProcessLlm.ModelPath!),
-        _ => new OllamaLlmClient(cfg.Ollama.BaseUrl ?? "http://localhost:11434", cfg.Agent.Model ?? "llama3.1:8b-instruct"),
+        // LM Studio (OpenAI-compatible endpoint)
+        "lmstudio" => new OllamaLlmClient(
+            cfg.Ollama.BaseUrl ?? "http://localhost:1234",
+            cfg.Agent.Model ?? "openai/gpt-oss-20b"),
+
+        // Ollama native
+        "ollamahttp" => new OllamaLlmClient(
+            cfg.Ollama.BaseUrl ?? "http://localhost:11434",
+            cfg.Agent.Model ?? "llama3.1:8b-instruct"),
+
+        // External process (optional custom runner)
+        "process" => new ProcessLlmClient(
+            cfg.ProcessLlm.ExecutablePath!,
+            cfg.ProcessLlm.ArgsTemplate!,
+            cfg.ProcessLlm.ModelPath!),
+
+        // Default → LM Studio + GPT-OSS-20B
+        _ => new OllamaLlmClient(
+            cfg.Ollama.BaseUrl ?? "http://localhost:1234",
+            cfg.Agent.Model ?? "openai/gpt-oss-20b"),
     };
 });
 
@@ -44,7 +63,7 @@ Directory.CreateDirectory(conf.Reports.OutputDir);
 var agent = app.Services.GetRequiredService<Agent>();
 
 // Demo workflow: ask model, query SQL, summarize, save report
-Console.WriteLine("Local Agent ready. Demo run starting...\n");
+Console.WriteLine("Local Agent ready with GPT-OSS-20B via LM Studio.\n");
 
 // 1) Simple prompt using memory
 var response = await agent.ChatAsync("سلام! امروز می‌خوام یک گزارش خلاصه از فروش روزانه بگیرم. کمکم می‌کنی؟");
@@ -59,4 +78,3 @@ var reportPath = await agent.GenerateSummaryReportFromQueryAsync(
 
 Console.WriteLine($"Report written to: {reportPath}");
 Console.WriteLine("Done.");
-
