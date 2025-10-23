@@ -36,7 +36,7 @@ namespace WindowsApplicationSampleChatWithAI
 			webChat.DefaultBackgroundColor = Color.White;
 			webChat.Location = new Point(0, 0);
 			webChat.Name = "webChat";
-			webChat.Size = new Size(757, 492);
+			webChat.Size = new Size(651, 359);
 			webChat.TabIndex = 0;
 			webChat.ZoomFactor = 1D;
 			// 
@@ -44,10 +44,10 @@ namespace WindowsApplicationSampleChatWithAI
 			// 
 			txtUserInput.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 			txtUserInput.Font = new Font("B Nazanin", 12F);
-			txtUserInput.Location = new Point(110, 15);
+			txtUserInput.Location = new Point(111, 13);
 			txtUserInput.Name = "txtUserInput";
 			txtUserInput.RightToLeft = RightToLeft.Yes;
-			txtUserInput.Size = new Size(635, 31);
+			txtUserInput.Size = new Size(528, 31);
 			txtUserInput.TabIndex = 1;
 			// 
 			// btnSend
@@ -71,15 +71,15 @@ namespace WindowsApplicationSampleChatWithAI
 			pnlInput.Controls.Add(txtUserInput);
 			pnlInput.Controls.Add(btnSend);
 			pnlInput.Dock = DockStyle.Bottom;
-			pnlInput.Location = new Point(0, 492);
+			pnlInput.Location = new Point(0, 359);
 			pnlInput.Name = "pnlInput";
 			pnlInput.Padding = new Padding(10);
-			pnlInput.Size = new Size(757, 60);
+			pnlInput.Size = new Size(651, 60);
 			pnlInput.TabIndex = 1;
 			// 
 			// Form1
 			// 
-			ClientSize = new Size(757, 552);
+			ClientSize = new Size(651, 419);
 			Controls.Add(webChat);
 			Controls.Add(pnlInput);
 			Font = new Font("B Nazanin", 12F);
