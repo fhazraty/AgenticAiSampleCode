@@ -31,40 +31,28 @@ namespace WindowsApplicationSampleChatWithAI
 			// webChat
 			// 
 			webChat.AllowExternalDrop = false;
+			webChat.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 			webChat.CreationProperties = null;
 			webChat.DefaultBackgroundColor = Color.White;
-			webChat.Dock = DockStyle.Fill;
 			webChat.Location = new Point(0, 0);
 			webChat.Name = "webChat";
-			webChat.Size = new Size(784, 511);
+			webChat.Size = new Size(757, 492);
 			webChat.TabIndex = 0;
 			webChat.ZoomFactor = 1D;
 			// 
-			// pnlInput
-			// 
-			pnlInput.BackColor = Color.FromArgb(240, 242, 245);
-			pnlInput.Controls.Add(txtUserInput);
-			pnlInput.Controls.Add(btnSend);
-			pnlInput.Dock = DockStyle.Bottom;
-			pnlInput.Location = new Point(0, 511);
-			pnlInput.Name = "pnlInput";
-			pnlInput.Padding = new Padding(10);
-			pnlInput.Size = new Size(784, 60);
-			pnlInput.TabIndex = 1;
-			// 
 			// txtUserInput
 			// 
-			txtUserInput.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			txtUserInput.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 			txtUserInput.Font = new Font("B Nazanin", 12F);
 			txtUserInput.Location = new Point(110, 15);
 			txtUserInput.Name = "txtUserInput";
 			txtUserInput.RightToLeft = RightToLeft.Yes;
-			txtUserInput.Size = new Size(662, 31);
+			txtUserInput.Size = new Size(635, 31);
 			txtUserInput.TabIndex = 1;
 			// 
 			// btnSend
 			// 
-			btnSend.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			btnSend.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
 			btnSend.BackColor = Color.FromArgb(0, 120, 215);
 			btnSend.FlatStyle = FlatStyle.Flat;
 			btnSend.Font = new Font("B Nazanin", 12F, FontStyle.Bold);
@@ -77,9 +65,21 @@ namespace WindowsApplicationSampleChatWithAI
 			btnSend.UseVisualStyleBackColor = false;
 			btnSend.Click += btnSend_Click;
 			// 
+			// pnlInput
+			// 
+			pnlInput.BackColor = Color.FromArgb(240, 242, 245);
+			pnlInput.Controls.Add(txtUserInput);
+			pnlInput.Controls.Add(btnSend);
+			pnlInput.Dock = DockStyle.Bottom;
+			pnlInput.Location = new Point(0, 492);
+			pnlInput.Name = "pnlInput";
+			pnlInput.Padding = new Padding(10);
+			pnlInput.Size = new Size(757, 60);
+			pnlInput.TabIndex = 1;
+			// 
 			// Form1
 			// 
-			ClientSize = new Size(784, 571);
+			ClientSize = new Size(757, 552);
 			Controls.Add(webChat);
 			Controls.Add(pnlInput);
 			Font = new Font("B Nazanin", 12F);
