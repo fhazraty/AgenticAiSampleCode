@@ -28,11 +28,17 @@ builder.Services.AddSingleton<ILlmClient>(sp =>
     // fallbacks to safe defaults
     var provider = cfg.Agent?.Provider?.ToLowerInvariant() ?? "lmstudio";
     var model = cfg.Agent?.Model ?? "openai/gpt-oss-20b";
-    var baseUrl = cfg.Ollama?.BaseUrl ?? "http://localhost:1234";
+    var baseUrl = provider switch
+    {
+        "lmstudio" => cfg.LmStudio?.BaseUrl ?? cfg.Ollama?.BaseUrl ?? "http://localhost:1234",
+        "ollamahttp" => cfg.Ollama?.BaseUrl ?? "http://localhost:11434",
+        _ => cfg.Ollama?.BaseUrl ?? "http://localhost:1234"
+    };
 
     return provider switch
     {
-        "lmstudio" => new OllamaLlmClient(baseUrl, model),
+        // LM Studio exposes an OpenAI-compatible API on /v1/chat/completions
+        "lmstudio" => new AgenticAISample.LLM.OpenAiCompatibleLlmClient(baseUrl, model, cfg.LmStudio?.ApiKey),
         "ollamahttp" => new OllamaLlmClient("http://localhost:11434", model),
         "process" => new ProcessLlmClient(
             cfg.ProcessLlm.ExecutablePath!,

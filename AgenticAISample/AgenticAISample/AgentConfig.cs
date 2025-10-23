@@ -3,6 +3,7 @@ namespace AgenticAISample;
 public sealed class AgentConfig
 {
     public AgentSection Agent { get; init; } = new();
+    public LmStudioSection LmStudio { get; init; } = new();
     public OllamaSection Ollama { get; init; } = new();
     public ProcessLlmSection ProcessLlm { get; init; } = new();
     public SqlSection Sql { get; init; } = new();
@@ -21,6 +22,12 @@ public sealed class AgentConfig
     public sealed class OllamaSection
     {
         public string? BaseUrl { get; init; }
+    }
+
+    public sealed class LmStudioSection
+    {
+        public string? BaseUrl { get; init; }
+        public string? ApiKey { get; init; }
     }
 
     public sealed class ProcessLlmSection
@@ -46,4 +53,3 @@ public sealed class AgentConfig
         public string OutputDir { get; init; } = "reports";
     }
 }
-
